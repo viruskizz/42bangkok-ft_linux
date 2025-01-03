@@ -64,6 +64,7 @@ Vagrant.configure("2") do |config|
     vb.gui = true
     vb.memory = "1024"
   end
+  config.vm.disk :disk, size: "10GB", name: "lfs"
   #
   # View the documentation for the provider you are using for more
   # information on available options.

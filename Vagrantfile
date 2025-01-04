@@ -78,4 +78,7 @@ Vagrant.configure("2") do |config|
   # SHELL
   config.vm.provision "file", source: "./scripts", destination: "$HOME/scripts"
   config.vm.provision "file", source: "./confs", destination: "$HOME/confs"
+
+  config.vm.provision "shell", path: "./scripts/packaged.sh"
+  config.vm.provision "shell", path: "./scripts/check.sh"
 end

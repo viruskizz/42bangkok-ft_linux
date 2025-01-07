@@ -2,7 +2,7 @@
 The first project of the Kernel branch! This is a simple LFS so that you can build your own distribution which will be used in the next projects
 
 ## Bible
-The base Linux official tutorial is [Linux From Scratch (LFS)](https://www.linuxfromscratch.org/~thomas/multilib/index.html)
+The base Linux official tutorial is [Linux From Scratch (LFS) version 8.4](https://www.linuxfromscratch.org/museum/lfs-museum/8.4-systemd/LFS-BOOK-8.4-systemd-HTML)
 
 ## Vagrant on WSL
 For Window user that using WSL as linux host.

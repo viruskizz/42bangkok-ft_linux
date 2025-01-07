@@ -1,5 +1,7 @@
 #!/bin/bash
 LFS=$LFS_PATH
+HOME_VAGRANT=/home/vagrant
+HOME_LFS=/home/lfs
 
 #####################
 # Download Packages #
@@ -9,12 +11,12 @@ chmod -v a+wt $LFS/sources
 
 mkdir -vp $LFS/sources/confs
 
-cp $HOME/confs/md5sum $LFS/sources/confs
-cp $HOME/confs/wget-list $LFS/sources/confs
+cp $HOME_VAGRANT/confs/md5sums $LFS/sources/confs
+cp $HOME_VAGRANT/confs/wget-list $LFS/sources/confs
 
 # Download all packages from list
-cd $LFS/sources
-wget --input-file=confs/wget-list \
+
+wget --input-file=$LFS/sources/confs/wget-list \
     --no-clobber \
     --continue \
     --directory-prefix=$LFS/sources
@@ -37,15 +39,15 @@ echo lfs | passwd lfs --stdin
 chown -v lfs $LFS/tools
 chown -v lfs $LFS/sources
 
-su -l lfs
+
 
 # For login shell read .bash_profile
-cat > ~/.bash_profile << "EOF"
+cat > $HOME_LFS/.bash_profile << "EOF"
 exec env -i HOME=$HOME TERM=$TERM PS1='\u:\w\$ ' /bin/bash
 EOF
 
 # For non-login shell read .bashrc
-cat > ~/.bashrc << "EOF"
+cat > $HOME_LFS/.bashrc << "EOF"
 set +h
 umask 022
 LFS=/mnt/lfs
@@ -56,4 +58,4 @@ export LFS LC_ALL LFS_TGT PATH
 export MAKEFLAGS='-j $(nproc)'
 EOF
 
-source ~/.bash_profile
+source $HOME_LFS/.bash_profile

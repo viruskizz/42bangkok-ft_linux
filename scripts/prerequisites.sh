@@ -1,12 +1,12 @@
 #/bin/bash
-source $(dirname $0)/color.sh
+source /home/vagrant/scripts/color.sh
 
 # Setup environment variables
 LFS_DEVICE=/dev/sdb
 LFS_PATH=/mnt/lfs
 echo "LFS_DEVICE=$LFS_DEVICE" >> $HOME/.bashrc
 echo "LFS_PATH=$LFS_PATH" >> $HOME/.bashrc
-source ~/.bashrc
+source $HOME/.bashrc
 
 #Install packages for Host
 sudo pacman -Sy --noconfirm \
@@ -18,7 +18,9 @@ sudo pacman -Sy --noconfirm \
     perl \
     python3 \
     texinfo\
-    parted
+    parted \
+    wget \
+    vim
 
 # Create a partition
 PARTED_EXISTING=$(parted --script $LFS_DEVICE print | awk '{print $1}' | grep '4')

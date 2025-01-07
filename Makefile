@@ -15,5 +15,6 @@ clean:
 fclean: clean
 	rm -rf .vagrant
 	rm -rf '/mnt/c/Users/kizza/VirtualBox VMs/ft_linux'
+	rm -rf '/mnt/c/Users/intel/VirtualBox VMs/ft_linux'
 
 .PHONY: up down clean fclean

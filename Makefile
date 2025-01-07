@@ -10,7 +10,7 @@ ssh:
 	vagrant ssh
 
 clean:
-	vagrant destroy
+	vagrant destroy --force
 
 fclean: clean
 	rm -rf .vagrant

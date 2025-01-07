@@ -1,14 +1,29 @@
 #/bin/bash
 source $(dirname $0)/color.sh
 
-# Create a partition
-# https://www.youtube.com/watch?v=nttLR55lFAY&ab_channel=BlueMonkey4n6
+# Setup environment variables
 LFS_DEVICE=/dev/sdb
+LFS_PATH=/mnt/lfs
+echo "LFS_DEVICE=$LFS_DEVICE" >> $HOME/.bashrc
+echo "LFS_PATH=$LFS_PATH" >> $HOME/.bashrc
+source ~/.bashrc
 
+#Install packages for Host
+sudo pacman -Sy --noconfirm \
+    bison \
+    gcc \
+    m4 \
+    make \
+    patch \
+    perl \
+    python3 \
+    texinfo\
+    parted
+
+# Create a partition
 PARTED_EXISTING=$(parted --script $LFS_DEVICE print | awk '{print $1}' | grep '4')
-
 if [ ! "$PARTED_EXISTING" ]; then
-    echo $Cyan"CREATING LFS Partition"$Color_Off
+    echo -e $Cyan"CREATING LFS Partition"$Color_Off
     parted --script $LFS_DEVICE \
         --align optimal \
         unit MiB \
@@ -19,11 +34,20 @@ if [ ! "$PARTED_EXISTING" ]; then
         mkpart "root" ext4 2GiB 100% \
         set 1 boot on \
         set 3 swap on
-    echo $Cyan"Making LFS Filesystem"$Color_Off
+    echo -e $Cyan"Making LFS Filesystem"$Color_Off
     mkfs.vfat -F32 "${LFS_DEVICE}1"
     mkswap "${LFS_DEVICE}3"
-    mkfs -v -t -F -L boot  ext2 "${LFS_DEVICE}2"
-    mkfs -v -t -F -L root ext4 "${LFS_DEVICE}4"
+    mkfs.ext2 -v -L boot "${LFS_DEVICE}2"
+    mkfs.ext4 -v -L root "${LFS_DEVICE}4"
 fi
-echo $Green"LFS Partition & Filesystem has been created"$Color_Off
-fdisk -l $LFS_DEVICE
+echo -e $Green"LFS Partition & Filesystem has been created"$Color_Off
+
+MOUNTED_EXISTING=$(df -h $LFS_PATH)
+if [ ! "$MOUNTED_EXISTING" ]; then
+    echo -e $Cyan"Mounting LFS device to $LFS_PATH"$Color_Off
+    mkdir -pv $LFS_PATH
+    mount -v -t ext4 ${LFS_DEVICE}4 $LFS_PATH
+    df -h
+    /sbin/swapon -v ${LFS_DEVICE}3
+fi
+echo -e $Green"LFS Partition has been mounted to $LFS_PATH"$Color_Off

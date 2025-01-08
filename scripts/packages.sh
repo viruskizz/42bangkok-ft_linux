@@ -1,5 +1,6 @@
 #!/bin/bash
-LFS=$LFS_PATH
+# Setup environment variables
+LFS=/mnt/lfs
 HOME_VAGRANT=/home/vagrant
 HOME_LFS=/home/lfs
 

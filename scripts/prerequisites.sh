@@ -4,9 +4,6 @@ source /home/vagrant/scripts/color.sh
 # Setup environment variables
 LFS_DEVICE=/dev/sdb
 LFS_PATH=/mnt/lfs
-echo "LFS_DEVICE=$LFS_DEVICE" >> $HOME/.bashrc
-echo "LFS_PATH=$LFS_PATH" >> $HOME/.bashrc
-source $HOME/.bashrc
 
 #Install packages for Host
 sudo pacman -Sy --noconfirm \

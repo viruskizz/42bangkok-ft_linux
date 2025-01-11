@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "archlinux/archlinux"
+  config.vm.box = "lfs/archlinux"
   config.ssh.connect_timeout = 5
   # config.ssh.username = "vagrant"
   # config.ssh.password = "vagrant"
@@ -51,10 +51,11 @@ Vagrant.configure("2") do |config|
   #
   config.vm.provider "virtualbox" do |vb|
     vb.name = "ft_linux"
-    vb.memory = "1024"
+    vb.cpus = 4
+    vb.memory = "2048"
     vb.gui = true
   end
-  config.vm.disk :disk, size: "10GB", name: "lfs"
+  config.vm.disk :disk, size: "20GB", name: "lfs"
   #
   # View the documentation for the provider you are using for more
   # information on available options.

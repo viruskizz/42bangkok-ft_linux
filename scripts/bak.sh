@@ -1,14 +1,21 @@
 #/bin/bash
-source /home/vagrant/scripts/color.sh
+source srcs/color.sh
 
 # Setup environment variables
 LFS_DEVICE=/dev/sdb
-LFS_PATH=/mnt/lfs
+LFS=/mnt/lfs
+
+ln -sf /bin/bash /bin/sh
 
 #Install packages for Host
-sudo pacman -Sy --noconfirm \
+apt-get update -y
+apt-get install -y \
+    dosfstools \
     bison \
+    g++ \
     gcc \
+    libisl-dev \
+    gawk \
     m4 \
     make \
     patch \
@@ -41,12 +48,12 @@ if [ ! "$PARTED_EXISTING" ]; then
 fi
 echo -e $Green"LFS Partition & Filesystem has been created"$Color_Off
 
-MOUNTED_EXISTING=$(df -h $LFS_PATH)
+MOUNTED_EXISTING=$(df -h $LFS)
 if [ ! "$MOUNTED_EXISTING" ]; then
-    echo -e $Cyan"Mounting LFS device to $LFS_PATH"$Color_Off
-    mkdir -pv $LFS_PATH
-    mount -v -t ext4 ${LFS_DEVICE}4 $LFS_PATH
+    echo -e $Cyan"Mounting LFS device to $LFS"$Color_Off
+    mkdir -pv $LFS
+    mount -v -t ext4 ${LFS_DEVICE}4 $LFS
     df -h
     swapon -v ${LFS_DEVICE}3
 fi
-echo -e $Green"LFS Partition has been mounted to $LFS_PATH"$Color_Off
+echo -e $Green"LFS Partition has been mounted to $LFS"$Color_Off

@@ -1,5 +1,5 @@
 #/bin/bash
-source /home/vagrant/scripts/color.sh
+source "$(dirname $0)/srcs/color.sh"
 
 # Setup environment variables
 LFS_DEVICE=/dev/sdb

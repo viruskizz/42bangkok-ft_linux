@@ -12,7 +12,8 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "lfs/archlinux"
+  # config.vm.box = "debian/buster64"
+  config.vm.box = "archlinux/archlinux"
   config.ssh.connect_timeout = 5
   # config.ssh.username = "vagrant"
   # config.ssh.password = "vagrant"
@@ -65,4 +66,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", path: "./scripts/prerequisites.sh"
   config.vm.provision "shell", path: "./scripts/check.sh"
   config.vm.provision "shell", path: "./scripts/packages.sh"
+
+  config.vm.provision "file", source: "./scripts", destination: "/mnt/lfs/sources/scripts"
+  config.vm.provision "file", source: "./confs", destination: "/mnt/lfs/sources/confs"
 end

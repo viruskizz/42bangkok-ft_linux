@@ -32,11 +32,12 @@ chown root:root $LFS/sources/*
 # Setup Environment #
 #####################
 mkdir -v $LFS/tools
+mkdir -v $LFS/tools/include
 ln -sv $LFS/tools /
 
 groupadd lfs
 useradd -s /bin/bash -g lfs -m -k /dev/null lfs
-echo "lfs:lfs" chpasswd
+echo "lfs" | passwd lfs --std-in
 
 chown -v lfs $LFS/tools
 chown -v lfs $LFS/sources
@@ -60,3 +61,6 @@ export MAKEFLAGS="-j $(nproc)"
 EOF
 
 source $HOME_LFS/.bash_profile
+
+chown -v lfs:lfs $HOME_LFS/.bashrc
+chown -v lfs:lfs $HOME_LFS/.bash_profile
